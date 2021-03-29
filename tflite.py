@@ -53,4 +53,12 @@ net1.compile(optimizer = optimizers.Adam(lr=1e-4),
 net1.fit(train_db,validation_data = test_db ,epochs = 1)
 
 tf.saved_model.save(net1,"/home/jimmy/Desktop/save_model")
+#transform the model to tflite
+converter = tf.lite.TFLiteConverter.from_saved_model('./save_model' )
+ # path to the SavedModel directory
+tflite_model = converter.convert()
+
+# Save the model.
+with open('model.tflite', 'wb') as f:
+  f.write(tflite_model)
    
